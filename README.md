@@ -8,8 +8,16 @@ Baby continual learning in a markdown file.
 
 ## Install
 
+**Claude Code**
+
 ```bash
 git clone https://github.com/blader/napkin.git ~/.claude/skills/napkin
+```
+
+**Codex**
+
+```bash
+git clone https://github.com/blader/napkin.git ~/.codex/skills/napkin
 ```
 
 That's it. The skill activates every session, unconditionally.
