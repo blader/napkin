@@ -1,0 +1,6 @@
+interface:
+  display_name: "Napkin"
+  short_description: "Capture recurring repository lessons"
+  default_prompt: "Use $napkin to capture this recurring repository lesson."
+policy:
+  allow_implicit_invocation: false

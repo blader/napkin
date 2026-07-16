@@ -1,106 +1,38 @@
 ---
 name: napkin
-description: |
-  Maintain a per-repo napkin as a continuously curated runbook (not a session
-  log). Activates EVERY session. Read and curate it before work, keep only
-  recurring high-value guidance, organize by priority-sorted categories, and
-  cap each category at top 10 items. The napkin lives at `.claude/napkin.md`.
-author: Codex
-version: 6.0.0
-date: 2026-02-21
+description: Capture or curate a recurring repository lesson only when the user explicitly invokes $napkin or asks to record, update, or migrate durable repo memory. Do not use for session startup, routine work, one-off status, or read-only analysis.
+disable-model-invocation: true
 ---
 
 # Napkin
 
-You maintain a per-repo markdown runbook, not a chronological log. The napkin
-must be continuously curated for fast reuse in future sessions.
+Capture durable repository lessons without turning ordinary tasks into a memory-maintenance workflow.
 
-**This skill is always active. Every session. No trigger required.**
+## Workflow
 
-## Session Start: Read And Curate
+1. Confirm the lesson is recurring, non-obvious, and likely to change future work. Do not store transient status, one-off failures, secrets, or facts already clear from the repository.
+2. Search the nearest applicable `AGENTS.md`, established runbooks, and existing lesson files for duplicates or contradictions.
+3. Use the narrowest durable location:
+   - Put required agent behavior in the closest applicable `AGENTS.md`.
+   - Put explanatory operational guidance in an established repository runbook.
+   - If neither exists and the user asked to capture the lesson, create `.agents/napkin/<short-slug>.md` with one lesson per file.
+4. Update an existing lesson instead of creating a duplicate. Remove or supersede a lesson only when current evidence shows it is wrong.
+5. Keep the change concise and report the exact destination.
 
-First thing, every session — read `.claude/napkin.md` before doing anything
-else. Internalize what's there and apply it silently. Don't announce that you
-read it. Just apply what you know.
+## Lesson Format
 
-Every time you read it, curate it immediately:
-
-- Re-prioritize items by importance (highest first).
-- Merge duplicates and remove stale/low-signal notes.
-- Keep only recurring, high-frequency guidance.
-- Ensure each item contains an explicit "Do instead" action.
-- Enforce category caps (top 10 per category).
-
-If no napkin exists yet, create one at `.claude/napkin.md`:
+For `.agents/napkin/<short-slug>.md`, use:
 
 ```markdown
-# Napkin Runbook
+# One-line lesson
 
-## Curation Rules
-- Re-prioritize on every read.
-- Keep recurring, high-value notes only.
-- Max 10 items per category.
-- Each item includes date + "Do instead".
+Date: YYYY-MM-DD
 
-## Execution & Validation (Highest Priority)
-1. **[YYYY-MM-DD] Short rule**
-   Do instead: concrete repeatable action.
+Why it matters: Brief evidence or context.
 
-## Shell & Command Reliability
-1. **[YYYY-MM-DD] Short rule**
-   Do instead: concrete repeatable action.
-
-## Domain Behavior Guardrails
-1. **[YYYY-MM-DD] Short rule**
-   Do instead: concrete repeatable action.
-
-## User Directives
-1. **[YYYY-MM-DD] Directive**
-   Do instead: exactly follow this preference.
+Do instead: Concrete repeatable action.
 ```
 
-Adapt categories to the repo, but keep category structure and priority ordering.
-Do not use raw journal-style entries.
+## Migration
 
-## Continuous Runbook Updates
-
-Update during work whenever you learn something reusable.
-
-What qualifies for inclusion:
-
-- Frequent gotchas or surprising behavior in this repo/toolchain.
-- User directives that affect repeated behavior.
-- Non-obvious tactics that repeatedly work.
-
-What does not qualify:
-
-- One-off timeline notes.
-- Verbose postmortems without reusable action.
-- Pure mistake logs without "Do instead" guidance.
-
-Entry format requirements:
-
-- Include date added (`[YYYY-MM-DD]`).
-- Include short rule title.
-- Include explicit `Do instead:` line.
-- Keep wording concise and action-oriented.
-
-## Category And Priority Policy
-
-- Organize notes by category.
-- Keep each category sorted by importance descending.
-- Re-evaluate category choice and priority whenever editing.
-- Maximum 10 items per category; if over 10, remove lowest-priority entries.
-- Prefer fewer high-signal items over broad coverage.
-
-## Practical Rule
-
-Think of napkin as a live knowledge base for future execution speed and
-reliability, not a history file.
-
-## Example Entry
-
-```markdown
-1. **[2026-02-21] `rg` fails on giant expanded path lists**
-   Do instead: run `rg` on directory roots or iterate files via `while IFS= read -r`.
-```
+When explicitly asked to migrate an older `.claude/napkin.md`, `.codex/napkin.md`, or `.Codex/napkin.md`, evaluate each entry independently. Move mandatory rules to `AGENTS.md`, move useful operational context to an established runbook, and discard stale, duplicated, or one-off notes. Do not migrate automatically.
